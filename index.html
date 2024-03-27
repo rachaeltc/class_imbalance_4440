@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Your Project Name</title>
+<meta property="og:title" content=Your Project Name" />
+<meta name="twitter:title" content="Your Project Name" />
+<meta name="description" content="Your project about your cool topic described right here." />
+<meta property="og:description" content="Your project about your cool topic described right here." />
+<meta name="twitter:description" content="Your project about your cool topic described right here." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" /> 
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- bootstrap for mobile-friendly layout -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+
+</head>
+<body class="nd-docs">
+<div class="nd-pageheader">
+ <div class="container">
+ <h1 class="lead">
+ <nobr class="widenobr">Your Project Name</nobr>
+ <nobr class="widenobr">For CS 7150</nobr>
+ </h1>
+ </div>
+</div><!-- end nd-pageheader -->
+
+<div class="container">
+<div class="row">
+<div class="col justify-content-center text-center">
+<h2>An Analysis of [papername]</h2>
+<p>Describe the paper and the big question about it that interests you.</p>
+</div>
+</div>
+<div class="row">
+<div class="col">
+
+<h2>Literature Review; Biography; Social Impact; Industry Applications; Follow-on Research; and Peer-Review</h2>
+
+<p>Just as we have done in the role-playing exercise, analyze the paper from all perspectives.
+</p>
+
+<p>Optionally, in addition to a reading-based analysis, implement the ideas of the paper in code, and report on your findings.
+</p>
+
+<h3>References</h3>
+
+<p><a name="bottou-1990">[1]</a> <a href="https://papers.baulab.info/Bottou-1990.pdf"
+  >L&eacute;on Bottou and Patrick Gallinari.
+  <em>A framework for the cooperation of learning algorithms.</em></a>
+  Advances in neural information processing systems 3 (1990).
+</p>
+
+<h2>Team Members</h2>
+                                                   
+<p>Make sure to list here is who is on the team.</p>
+
+  
+</div><!--col-->
+</div><!--row -->
+</div> <!-- container -->
+
+<footer class="nd-pagefooter">
+  <div class="row">
+    <div class="col-6 col-md text-center">
+      <a href="https://cs7150.baulab.info/">About CS 7150</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+<script>
+$(document).on('click', '.clickselect', function(ev) {
+  var range = document.createRange();
+  range.selectNodeContents(this);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+});
+// Google analytics below.
+window.dataLayer = window.dataLayer || [];
+</script>
+</html>

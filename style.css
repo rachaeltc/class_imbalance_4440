@@ -1,0 +1,69 @@
+body, td, th {
+  font-family: 'Open Sans', sans-serif;
+}
+h2 {
+  margin-top: 3ex;
+}
+/* Deep blues */
+.color-primary-0 { color: #233BF5 }
+.color-primary-1 { color: #3314DE }
+.color-primary-2 { color: #7717FA }
+.color-primary-3 { color: #1461DE }
+.color-primary-4 { color: #17A9FA }
+
+.nd-pageheader {
+  padding: 2rem 15px;
+  margin-bottom: 1.5rem;
+  color: white;
+  text-align: center;
+  background-color: #233BF5;
+}
+
+.nd-pageheader a, .nd-pageheader a.likelink {
+  color: #e4f1fe;
+}
+
+.nd-pagefooter {
+  color: white;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  text-align: center;
+  background-color: #233BF5;
+}
+
+.nd-pagefooter a {
+  color: #e4f1fe;
+}
+
+.nd-pageheader .container {
+  position: relative
+}
+
+.nd-pageheader address {
+  font-weight: 300;
+}
+
+.nd-pageheader p, .nd-pageheader h1 {
+  margin-bottom: 0.75rem;
+  font-size: 2.25rem;
+  font-weight: 300;
+  line-height: 1.3;
+}
+
+.citation {
+  margin-top: 15px;
+  clear: both;
+}
+.citation:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.citation img {
+  float: left;
+  margin: 0 10px 10px 0;
+  width: 250px;
+}
+nobr.widenobr {
+  white-space: normal;
+}
