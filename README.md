@@ -1,19 +1,11 @@
-# Class Project Website Template
+# Addressing Class Imbalance in Classification Models: A Comparative Study of Synthetic Image Generation and Resampling Techniques
 
-Copy this template on github, and rename the repo to the name of your project.
+Webpage: https://expo.baulab.info/2024-Spring/rachaeltc/
 
-Then go to the repo "Settings" and change "Webhook" settings, to "Add a webhook."
+In “LesionAid: Vision Transformers-based Skin Lesion Generation and Classification,” Krishna et al. propose a system containing a deep learning architecture that can be used for early detection of skin lesions through image classification. They identify that there is a significant discrepancy in the number of samples for each label in their multi-class dataset, so to address this issue of class imbalance, they design a system that uses synthetic images from ViTGANs trained on original image data and adopts this data as a part of their Lesion database. This database is eventually used for lesion classification. 
 
-Set up the webhook exactly as you see in the image below, so that it sends
-JSON push notifications to `https://expo.baulab.info/push`.  To work, it will
-need to have the secret pictured.
+**We aim to investigate the effectiveness of the paper’s proposed method of using synthetic images to solve the issue of class imbalance, as opposed to the more basic, and less costly, method of resampling**, in which samples from minority classes are repeated to fill the gaps. Our data consists of images of ocular diseases labeled with one of four classes, each representing a different ocular condition. Similar to the original paper, we aim to generate synthetic and augmented images to address class imbalance. We follow a similar process to a paper but with different approaches at each step. Specifically, we use a diffusion model for image generation instead of a ViTGAN, and for image classification, we use a pretrained ResNet on which we fine-tune our ocular disease data. 
 
-<img src="webhook.png" style="max-width:100%">
+Our Implementation Preview:
 
-Then whenever you push your website, it will show up on
-https://expo.baulab.info/2024-Spring/[username].  Customize your
-`index.html`.
-
-Your final project report will be a static HTML website that
-shares your insights.  As you develop your
-methods, results, and narrative, add content as needed here.
+<img src="viz/flow.jpg" style="width:70%">
