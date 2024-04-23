@@ -31,38 +31,138 @@
 <div class="col">
 
 <h2>Introduction</h2>
-The main question we're tackling in our project is to examine how effectively we can apply an ocular lesion/ocular disease dataset to a solution proposed in the “LesionAid: Vision Transformers-based Skin Lesion Generation and Classification” by Krishna et al. Our data consists of images of ocular diseases labeled with one of eight classes, each representing a different ocular condition, and a ‘Normal’ class. Similar to the original paper, we aim to generate synthetic and augmented images to address class imbalance. We aim to investigate the effectiveness of the paper’s proposed method of using synthetic images to solve the issue of class imbalance, as opposed to the more basic, and less costly, method of resampling, in which samples from minority classes are repeated to fill the gaps. We follow a similar process to a paper but with different approaches at each step. Specifically, we use a diffusion model for image generation instead of a ViTGAN, and for image classification, we use a pretrained ResNet on which we fine-tune our ocular disease data.
-<h2>Paper Review</h2>
+<p class='tab'>
+  The main question we're tackling in our project is to examine how effectively we can apply an ocular 
+  lesion/ocular disease dataset to a solution proposed in the “LesionAid: Vision Transformers-based 
+  Skin Lesion Generation and Classification” by Krishna et al. Our data consists of images of ocular 
+  diseases labeled with one of eight classes, each representing a different ocular condition, and a 
+  ‘Normal’ class. Similar to the original paper, we aim to generate synthetic and augmented images 
+  to address class imbalance. We aim to investigate the effectiveness of the paper’s proposed method 
+  of using synthetic images to solve the issue of class imbalance, as opposed to the more basic, and 
+  less costly, method of resampling, in which samples from minority classes are repeated to fill the 
+  gaps. We follow a similar process to a paper but with different approaches at each step. Specifically, 
+  we use a diffusion model for image generation instead of a ViTGAN, and for image classification, we 
+  use a pretrained ResNet on which we fine-tune our ocular disease data.
 
-This paper discusses the importance of early detection of skin lesions in the dermatology field, and proposes the LesionAid, a system containing a deep learning architecture that can be used for early detection of skin lesions through image classification. It starts off discussing the anticipated challenges with implementing this system, and identifies that the main issue is the existence of class imbalance within their skin lesion dataset. This issue could potentially lead to overfitting and difficulty with creating a generalizable model. To handle this issue, the first component of their system is a Vision Transformer-based Generative Adversarial Network (ViTGAN), trained on the original images to generate synthetic images to aid in better balancing out the minority classes. The combined set of original and synthetic images are then transformed with the same augmentations, before being passed into the Vision Transformer (ViT) component of their system, to be used as training data. The next component in the system proposed is the Gradient-weighted Class Activation Mapping (GradCAM), implemented to better explain the performance of their ViTGAN, and also identify potential errors or biases. The last component of this system is a front-end web application, which can be used as a diagnostic tool. 
-<br/><br/>
-For the sake of our project we focus mainly on the paper’s choice to use synthetic images to mitigate their concern of class imbalance. The LesionAid system uses the synthetic output of ViTGANs and adopts this data as a part of their Lesion database, which is eventually used for lesion classification.They were able to achieve good results with this system, resulting with 99.2 percent and 97.4 percent training and validation accuracy as their highest rates. As such, we would like to investigate this technique of class imbalance and evaluate its effectiveness by implementing it with new techniques and applicability to ocular disease image data.
+
+</p>
+
+
+<h2>Paper Review</h2>
+<p class='tab'>
+This paper discusses the importance of early detection of skin lesions in the dermatology field, 
+and proposes the LesionAid, a system containing a deep learning architecture that can be used for 
+early detection of skin lesions through image classification. It starts off discussing the anticipated 
+challenges with implementing this system, and identifies that the main issue is the existence of class 
+imbalance within their skin lesion dataset. This issue could potentially lead to overfitting and 
+difficulty with creating a generalizable model. To handle this issue, the first component of their 
+system is a Vision Transformer-based Generative Adversarial Network (ViTGAN), trained on the original 
+images to generate synthetic images to aid in better balancing out the minority classes. The combined 
+set of original and synthetic images are then transformed with the same augmentations, before being 
+passed into the Vision Transformer (ViT) component of their system, to be used as training data. The 
+next component in the system proposed is the Gradient-weighted Class Activation Mapping (GradCAM), 
+implemented to better explain the performance of their ViTGAN, and also identify potential errors or 
+biases. The last component of this system is a front-end web application, which can be used as a 
+diagnostic tool. 
+</p>
+<p class='tab'>
+For the sake of our project we focus mainly on the paper’s choice to use synthetic images to mitigate 
+their concern of class imbalance. The LesionAid system uses the synthetic output of ViTGANs and adopts 
+this data as a part of their Lesion database, which is eventually used for lesion classification. They 
+were able to achieve good results with this system, resulting with 99.2 percent and 97.4 percent
+ training and validation accuracy as their highest rates. As such, we would like to investigate this 
+ technique of class imbalance and evaluate its effectiveness by implementing it with new techniques 
+ and applicability to ocular disease image data.
+</p>
+
 
 <h2>Method</h2>
-Our implementation aims to evaluate the solution of class imbalance proposed in the original paper. First, we split the original dataset (https://www.kaggle.com/datasets/andrewmvd/ocular-disease-recognition-odir5k) into a train and test set. We then balance the training set through resampling, or repeating samples from classes with less samples. We then emulate the study and generate synthetic images, though we use diffusion models over GANs, as our second approach to class imbalance. The two balanced datasets are consequently used to fine-tune two separate ResNet models which are evaluated on the held out test set of images. 
-<br/>
+<p class='tab'>
+Our implementation aims to evaluate the solution of class imbalance proposed in the original paper. 
+First, we split the <a href="https://www.kaggle.com/datasets/andrewmvd/ocular-disease-recognition-odir5k">original ODIR-5K dataset</a> 
+into train and test set, using a 90% to 10% split, due to the limited amount of data. We then balance the training set through resampling, or repeating samples 
+from classes with less samples. We then emulate the study and generate synthetic images, though we use 
+diffusion models over GANs, as our second approach to class imbalance. The two balanced datasets are 
+consequently used to fine-tune two separate ResNet models which are evaluated on the held out test set of images. 
+</p>
 <img src="viz/flow.jpg" alt="Flowchart" class="center", width="75%"/><br/>
 
-The project code is available in the "code" folder of <a href="https://github.com/rachaeltc/class_imbalance_4440">rachaeltc/class_imbalance_4440</a>
+<p>
+  The project code is available in the "code" folder of <a href="https://github.com/rachaeltc/class_imbalance_4440">rachaeltc/class_imbalance_4440</a>
+</p>
 
-<br /><br /><b>Image Synthesizing: Diffusion Model and Image Augmentation </b><br />
-	In the first component, image synthesis, we aim to generate synthetic images for different labels of ocular lesions, with the intent of mitigating class imbalance. For this purpose, we train a UNet2DModel from scratch, through Huggingface. THe Unet2DModel is based on the UNet Model, which was developed with the motivation of being able to successfully train deep networks with fewer training samples. They achieve this through a U-shaped architecture, consisting of an encoder, the contracting path, and the decoder, the expanding path. One of the main benefits of this model is that it can output images that are the same size as the input, and was successfully tested on biomedical image segmentation. 
+<h4>Image Synthesizing: Diffusion Model </h4>
+<p class='tab'>
+In the first component, image synthesis, we aim to generate synthetic images for different labels of ocular 
+lesions, with the intent of mitigating class imbalance. For this purpose, we train a UNet2DModel from scratch, 
+through the Huggingface Diffusers API. The Unet2DModel is based on the UNet Model, which was developed with 
+the motivation of being able to successfully train deep networks with fewer training samples. They achieve 
+this through a U-shaped architecture, consisting of an encoder, the contracting path, and the decoder, 
+the expanding path. One of the main benefits of this model is that it can output images that are the same 
+size as the input, and was successfully tested on biomedical image segmentation. This model works to our 
+advantage, since we have classes with as few as ~300 samples, and we are also working with biomedical images, 
+specifically ocular scans.
+
+</p>
   <!--<img src="viz/unet.png" alt="UNet" class="center", width="45%"/>-->
-  The image data is first loaded into a Custom Dataset class, which resizes (to 64x64) and normalizes the images to become the training data for this model. The purpose of the UNet2DModel is to denoise the input samples– it takes in a noisy sample and a timestep, and returns a sample-shaped output. We trained a separate diffusion model for each of the eight classes of our data, and used these models to generate synthetic ocular images to be prepared as training data for image classification. 
-	<br /> 
-  We also employed image augmentation techniques, from the torchvision transforms library, to augment original images to create more samples within classes that were lacking samples. This included random rotation, random cropping, horizontal and vertical flip, as well as  variations in brightness, saturation, and hue. 
-<br /><br /><b>Vision Transformer for Image Classification</b> <br />
-	For the Vision Transformer for Image Classification we created a SyntheticDataset class which was meant to be used to generate the synthetic images for training. This class helped initialize the dataset, providing the total number of samples in the dataset, as well as the actual generation of synthetic images as well as their corresponding labels by the generator function. From there, an instance of this class is create with the previously trained generator and wrapped in a data loader so that it can iterate over all of the different shuffled batches of data throughout the training process. In terms of the actual model, we used a pre-trained ResNet50, a convolutional neural network architecture, model for the image classification. From there cross-entropy loss is used as the loss function to optimize the model followed by the actual training loop for the image classification. That being said, because we struggled with incredibly long run times with run times for the training loop.
-<br/><br/>
+<p class="tab">
+  The image data from our training set is first resized (to a resolution of 64x64) and normalized to 
+  constitute the training data for this model. We trained a separate UNet2D diffusion model for each 
+  of the eight classes of our data, and used these models to generate synthetic ocular images to be 
+  prepared as training data for image classification. 
+</p>
+<p class="tab">
+  The training images from each label are used to train a separate diffusion model, so as to have 
+  models for each label that can produce synthetic images for that given class. Each UNet2DModel 
+  is trained on with 200 epochs and a learning rate of <i>1e-4</i>. 
+</p>
+
+  <h4>Image Classification: ResNet50</h4>
+<p class="tab">
+  For the Image Classification we do a comparison between the performance of two ResNet models, 
+  one trained on a dataset balanced through synthetic images, and the other trained on a dataset 
+  balanced through repetition of the original images, both techniques used to even out the class sizes. 
+</p>
+<p class="tab">
+  We used the pre-trained ResNet50 model for the image classification, and fine-tuned two instances 
+  of the model with our two datasets, using the Adam optimizer and cross-entropy as the loss function. 
+  The original architecture of the pretrained model was generally preserved, with just an addition of a 
+  Linear transformation layer, going from the model’s number of features to our desired number of 
+  classes. Similar to the original paper, we trained the models over 30 epochs, each with a batch 
+  size of 50 samples. 
+</p>
+<p class="tab">
+  After training two ResNet models, we evaluate performance by feeding the models the held out test 
+  data, in addition to the training. From there we were able to analyze classification reports 
+  and confusion matrices, created using those ground truth labels as well as the model predictions, 
+  to compare results and determine the effectiveness of the solution to class imbalance proposed in LesionAid.
+</p>
 
 
 <h2>Findings</h2>
+<h4>Class Imbalance </h4>
 <img src="viz/class_imbalance.png" alt="ODIR-5k Class Imbalance" class="center", width="50%"/>
 
-We can see that the original dataset contained a disproportionate amount of the ‘N’ class, with over 2500 samples, compared to the ‘M’, ‘H’, ‘A’, ‘G’ classes, which have less than 300 each. After performing image synthesis and augmentation, we can produce more balanced classes with the artificial data. 
-<br /> <br />
-Here are some examples of images generated through the diffusion model, through the epochs:
-<img src="viz/diffusion_epochs.png" alt="ODIR-5k Class Imbalance" class="center", width="75%"/>
+<p> 
+  We can see that the original dataset contained a disproportionate amount of the ‘O’ class, 
+  with over 1000 samples, compared to the ‘M’, ‘C’, and ‘H’’ classes, which have less than 
+  300 each. After employing the basic resampling technique and image synthesis technique with 
+  the diffusion model, we can produce more balanced classes with artificial data. 
+</p>
+
+<h4>Diffusion Model Results: Synthesized Images </h4>
+<div class="left-img-flex">
+<img src="viz/diffusion_epochs.png" alt="ODIR-5k Class Imbalance" class="center", width="45%", float="right"/>
+
+<p> 
+  We can see that for D, the images being synthesized at epoch 10 already contain a lot 
+  less noise than those of the other classes. This can be attributed to the large sample size
+   available for the label ‘D”. However, the overall results provide a generally accurate 
+   representation of the original images, which are all eye scan images containing a circular 
+   view of the scan at the center of the image. 
+
+</p>
+</div>
 
 <br/>[FID Score Comparison by Label]
 

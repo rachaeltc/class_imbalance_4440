@@ -84,3 +84,10 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.tab { text-indent: 30px; }
+
+.left-img-flex {
+  display: flex;
+  position: relative;
+}
