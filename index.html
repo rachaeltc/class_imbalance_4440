@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>An Analysis of LesionAid</title>
+<title>Addressing Class Imbalance</title>
 <meta property="og:title" content=Your Project Name" />
 <meta name="twitter:title" content="Your Project Name" />
 <meta name="description" content="Your project about your cool topic described right here." />
@@ -32,19 +32,20 @@
 
 <h2>Introduction</h2>
 <p class='tab'>
-  The main question we're tackling in our project is to examine how effectively we can apply an ocular 
-  lesion/ocular disease dataset to a solution proposed in the “LesionAid: Vision Transformers-based 
-  Skin Lesion Generation and Classification” by Krishna et al. Our data consists of images of ocular 
-  diseases labeled with one of eight classes, each representing a different ocular condition, and a 
-  ‘Normal’ class. Similar to the original paper, we aim to generate synthetic and augmented images 
-  to address class imbalance. We aim to investigate the effectiveness of the paper’s proposed method 
+  The main question we&apos;re tackling in our project is to examine how effectively we can apply an ocular 
+  lesion/ocular disease dataset to a solution proposed in the <cite>LesionAid: Vision Transformers-based 
+  Skin Lesion Generation and Classification </cite> by Krishna et al. Our data consists of images of ocular 
+  diseases labeled with one of eight classes. Similar to the original paper, we aim to generate synthetic and augmented images 
+  to address class imbalance. <b>We aim to investigate the effectiveness of the paper&apos;s proposed method 
   of using synthetic images to solve the issue of class imbalance, as opposed to the more basic, and 
   less costly, method of resampling, in which samples from minority classes are repeated to fill the 
-  gaps. We follow a similar process to a paper but with different approaches at each step. Specifically, 
+  gaps.</b> We follow a similar process to a paper but with different approaches at each step. Specifically, 
   we use a diffusion model for image generation instead of a ViTGAN, and for image classification, we 
   use a pretrained ResNet on which we fine-tune our ocular disease data.
 
-
+</p>
+<p>
+  The project code is available here: <a href="https://github.com/rachaeltc/class_imbalance_4440">rachaeltc/class_imbalance_4440</a>
 </p>
 
 
@@ -65,8 +66,16 @@ implemented to better explain the performance of their ViTGAN, and also identify
 biases. The last component of this system is a front-end web application, which can be used as a 
 diagnostic tool. 
 </p>
+
+<figure>
+  <img src="viz/lesionAid_structure.png" alt="Flowchart" class="center", width="75%"/>
+  <figcaption class="center">
+    Figure 1. Structure of LesionAid, proposed by Krishna et al. (2023) 
+  </figcaption>
+  </figure>
+
 <p class='tab'>
-For the sake of our project we focus mainly on the paper’s choice to use synthetic images to mitigate 
+For the sake of our project we focus mainly on the paper&apos;s choice to use synthetic images to mitigate 
 their concern of class imbalance. The LesionAid system uses the synthetic output of ViTGANs and adopts 
 this data as a part of their Lesion database, which is eventually used for lesion classification. They 
 were able to achieve good results with this system, resulting with 99.2 percent and 97.4 percent
@@ -85,11 +94,14 @@ from classes with less samples. We then emulate the study and generate synthetic
 diffusion models over GANs, as our second approach to class imbalance. The two balanced datasets are 
 consequently used to fine-tune two separate ResNet models which are evaluated on the held out test set of images. 
 </p>
-<img src="viz/flow.jpg" alt="Flowchart" class="center", width="75%"/><br/>
 
-<p>
-  The project code is available in the "code" folder of <a href="https://github.com/rachaeltc/class_imbalance_4440">rachaeltc/class_imbalance_4440</a>
-</p>
+
+<figure>
+<img src="viz/flow.jpg" alt="Flowchart" class="center", width="75%"/>
+<figcaption class="center">
+  Figure 2. Flow of our Methodology
+</figcaption>
+</figure>
 
 <h4>Image Synthesizing: Diffusion Model </h4>
 <p class='tab'>
@@ -112,9 +124,13 @@ specifically ocular scans.
   prepared as training data for image classification. 
 </p>
 <p class="tab">
-  The training images from each label are used to train a separate diffusion model, so as to have 
-  models for each label that can produce synthetic images for that given class. Each UNet2DModel 
-  is trained on with 200 epochs and a learning rate of <i>1e-4</i>. 
+  The image data from our training set is first resized (to a resolution of 64x64) and normalized 
+  to constitute the training data for this model. The training images from each label are used to 
+  train a separate diffusion model, so as to have models for each label that can produce synthetic 
+  images for that given class. Each UNet2DModel is trained on with 200 epochs and a learning rate of 
+  1e-4. The encoder portion is composed of DownBlock2D and AttnDownBLock2D layers, which are both 
+  ResNet downsampling blocks. The decoder portion is composed of UpBLock2D and AttnUpBLock2D layers, 
+  both instances of ResNet upsampling blocks. 
 </p>
 
   <h4>Image Classification: ResNet50</h4>
@@ -127,7 +143,7 @@ specifically ocular scans.
   We used the pre-trained ResNet50 model for the image classification, and fine-tuned two instances 
   of the model with our two datasets, using the Adam optimizer and cross-entropy as the loss function. 
   The original architecture of the pretrained model was generally preserved, with just an addition of a 
-  Linear transformation layer, going from the model’s number of features to our desired number of 
+  Linear transformation layer, going from the model&apos;s number of features to our desired number of 
   classes. Similar to the original paper, we trained the models over 30 epochs, each with a batch 
   size of 50 samples. 
 </p>
@@ -141,37 +157,140 @@ specifically ocular scans.
 
 <h2>Findings</h2>
 <h4>Class Imbalance </h4>
-<img src="viz/class_imbalance.png" alt="ODIR-5k Class Imbalance" class="center", width="50%"/>
+
+<figure>
+<img src="viz/class_imbalance.png" alt="ODIR-5k Class Imbalance" class="center", width="75%"/>
+<figcaption class="center">
+  Figure 3. Existence of class imbalance in the ODIR-5k Dataset 
+</figcaption>
+</figure>
 
 <p> 
-  We can see that the original dataset contained a disproportionate amount of the ‘O’ class, 
-  with over 1000 samples, compared to the ‘M’, ‘C’, and ‘H’’ classes, which have less than 
+  In Figure 3, we can see that the original dataset contained a disproportionate amount of the <q>O</q> class, 
+  with over 1000 samples, compared to the <q>M</q>, <q>C</q>, and <q>H</q> classes, which have less than 
   300 each. After employing the basic resampling technique and image synthesis technique with 
   the diffusion model, we can produce more balanced classes with artificial data. 
 </p>
 
-<h4>Diffusion Model Results: Synthesized Images </h4>
-<div class="left-img-flex">
-<img src="viz/diffusion_epochs.png" alt="ODIR-5k Class Imbalance" class="center", width="45%", float="right"/>
+<p>
+  Our starting and ending state for the sample distributions between classes draw a parallel to those in <cite>LesionAid</cite>,
+  in which they balance the class samples by image synthesis through a ViTGAN. 
+</p>
 
+<h4>Diffusion Model Results: Synthesized Images </h4>
 <p> 
-  We can see that for D, the images being synthesized at epoch 10 already contain a lot 
-  less noise than those of the other classes. This can be attributed to the large sample size
-   available for the label ‘D”. However, the overall results provide a generally accurate 
-   representation of the original images, which are all eye scan images containing a circular 
-   view of the scan at the center of the image. 
+  We can see that in Figure 4, for label <q>D</q>, the images being synthesized at epoch 10 already contain a lot 
+  less noise than those of the other classes. This can be attributed to the large sample size 
+  available for the label <q>D</q>. In contrast, we can see for the label <q> H</q> that the images 
+  start to be less noisy much later into the training loop, compared to the other images, for the same 
+  reason. <q> H</q> contains the least samples, with 110 training samples.
 
 </p>
+
+<figure>
+<img src="viz/diffusion_epochs.png" alt="Diffusion Epochs" class="center", width="65%", float="right"/>
+<figcaption class="center">
+  Figure 4. Progress for Each Class in the UNet2D Diffusion Model, Across 5 Stages in Training
+</figcaption>
+</figure>
+
+<p>
+  We can also investigate the quality of the individual images generated by the diffusion model. 
+  As seen in Figure 5, there is variability in the synthetic image quality between samples, as the 
+  artificial <q>SYNTH_22.jpg</q> eye scan contains more realistic and defined elements that reflect
+  those of the real sample, in comparison with the sample <q>SYNTH_46.jpg</q>.
+</p>
+
+<figure>
+  <img src="viz/sample_diffusion.png" alt="Diffusion Sample" class="center", width="55%", float="right"/>
+  <figcaption class="center">
+    Figure 5. Sample Images from Diffusion Model, Compared to an Original Sample (Label D)
+  </figcaption>
+  </figure>
+
+  <p>
+    However, the overall results provide a generally accurate representation of the original images, which are all eye scan images containing a circular view of the scan at the center of the image. 
+  </p>
+
+<h4>Image Classification Training Loss and Accuracy</h4>
+<p>
+  In the training progress plots for the image classification models using the two datasets, we can see that 
+  both observe relative increases in test set loss over the training time, while there is a decrease in the 
+  training set loss over time. This pattern is a lot more evident with the model trained on the resampled 
+  data, indicating that there is most likely overfitting that occurred, causing the model to not be able 
+  to generalize well. This makes sense because the resampling-balanced dataset consists of repeated samples, 
+  to the degree of magnifying a ~200 size dataset to ~1600. 
+</p>
+
+<p>
+  We can also see that the training accuracies for both models end up around 1.0, which indicates severe overfitting.
+</p>
+<figure >
+  <img src="viz/synth_training_graphs.png" alt="Synthetic Trainig Progress" class="center", width="95%", float="right"/>
+  <figcaption class="center">
+    Figure 6. Tuning ResNet 50 with Synthetic Image Balanced Dataset
+  </figcaption>
+</figure>
+
+<figure >
+  <img src="viz/rep_training_graphs.png" alt="Synthetic Trainig Progress" class="center", width="95%", float="right"/>
+  <figcaption class="center">
+    Figure 7. Tuning ResNet 50 with Resampling Balanced Dataset:
+  </figcaption>
+</figure>
+
+
+<p>
+  In comparison with that of the training progress observed in the <cite>LesionAid</cite> study, we observe 
+  more fluctuations in both loss and accuracy, which may indicate a need for optimized hyperparameters, and further
+  exploration of different batch sizes and learning rates.
+</p>
+
+<h4> Image Classification Evaluation</h4>
+<p>
+As observed in Figure 8, we can see that the two models perform similarly in terms of classification on the held out
+data. We can see that for both models, they oftentimes mistaken an <q>H</q> sample for <q>D</q>. This can most likely
+be explained by the overwhelming sample size of the Diabetes (D) eye scans, compared to the very few Hypertension (H) 
+samples available, causing a bias in the predictions towards the class with more samples.
+</p>
+<div class="img-flex">
+  <figure>
+    <img src="viz/synth_test_cm.png" alt="Snow" style="width:45%">
+
+    <img src="viz/rep_test_cm.png" alt="Forest" style="width:45%">
+
+  <figcaption class="center">
+    Figure 8. Confusion Matrices for Ocular Disease Image Classification for Synthetic Image-balanced dataset(left) and resampling-balanced dataset (right)
+  </figcaption>
+</figure>
 </div>
-
-<br/>[FID Score Comparison by Label]
-
-<br/><br/>
-[Image Classification Results in Progress]
-<br/> to add Accuracy vs Epoch graph, Epoch vs Loss trend graph
+<p>
+  Aside from label <q> H</q>, we can see that the other labels are usually able to reliably be accurately classified,
+  with the resampling dataset-trained model exhibiting slightly better performance. Looking back at Figures 6 and 7, we can see that 
+  both models generally demonstrate accuracies over 0.9, in both the training and testing sets. This result is comparable to
+  that presented in <cite>LesionAid</cite>, which prsented a 0.992 and 0.974 accuracy for training and validation, respectively.
+</p>
 
 <h2>Conclusion</h2>
-[conclusion]
+<p class="tab">
+In this project, we evluate the effectiveness of using syntehtic images as a solution for class imbalance, and compare
+the results to a more basic approach, resampling. We balance an ocular disease scan dataset with these two approaches: first with artificial images 
+from a diffusion model, then through repeating samples, and then train two classification models on each dataset to compare performance.
+We observe that in cases with severely imbalacned data, using either technique may have limitations. For image synthesis, there
+would be insufficient data to learn from, and for resampling, there would be an overreliance on the few samples to make up
+gaps that are large in magnitude. These limitations are propogated to the performance of downstream applications, in this case,
+the image classification models, in the form of overfitting, leading to poor generalization. 
+
+</p><p class="tab">
+We were limited in resources for this study, and as a result, had to compromise in different areas to make up 
+for the lack of computational resources, including decreasing the number of epochs, reducing training set sizes, 
+increasing batch sizes, among other factors. We were also unable to try different hyperparameters and training configurations. 
+However, these limitations suggest potential for future work in this area. This may include developing a more suitable
+model or architecture for this use case and investing more resources to train a model to produce more accurate and higher quality
+synthetic images. We hope the design of this experiment can be used as a foundation to expand upon, and further insights
+into using synthetic images as a solution to class imbalance can be explored.
+
+</p>
 
 <h2>References</h2>
 
